@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>36431250891-02r3ngrfvkbkbc1prov6o35egjfomtsc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.36431250891-02r3ngrfvkbkbc1prov6o35egjfomtsc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMMbLKn5Mh2iOw1PbzQX9hzzdAnHvJKj0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>36431250891</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.geetika.Extractor</string>
+	<key>PROJECT_ID</key>
+	<string>imgtextextractor</string>
+	<key>STORAGE_BUCKET</key>
+	<string>imgtextextractor.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:36431250891:ios:a3a10fed974b9ee75ba24e</string>
+	<key>DATABASE_URL</key>
+	<string>https://imgtextextractor.firebaseio.com</string>
+</dict>
+</plist>
