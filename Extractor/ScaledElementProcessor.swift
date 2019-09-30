@@ -16,7 +16,8 @@ struct ScaledElement {
 class ScaledElementProcessor {
 	let vision = Vision.vision()
 	var textRecognizer: VisionTextRecognizer!
-	
+  var myResult: String = " "
+  
 	init() {
 		textRecognizer = vision.onDeviceTextRecognizer()
 	}
@@ -31,12 +32,30 @@ class ScaledElementProcessor {
         return
       }
       
+      
+      
+      for block in result.blocks{
+        if(block.text.lowercased().contains("ingredient")){
+          for line in block.lines{
+            for element in line.elements {
+              self.myResult.append(element.text)
+              self.myResult.append(" ")
+              if(element.text.contains(":") || element.text.contains(","))
+                {
+                  self.myResult.append("\n")}
+                }
+          }//print(block.text)
+      }
+        print(self.myResult)
+      }
+      
+      
+      
       var scaledElements: [ScaledElement] = []
       for block in result.blocks {
         for line in block.lines {
           for element in line.elements {
             let frame = self.createScaledFrame(featureFrame: element.frame, imageSize: image.size, viewFrame: imageView.frame)
-            
             let shapeLayer = self.createShapeLayer(frame: frame)
             let scaledElement = ScaledElement(frame: frame, shapeLayer: shapeLayer)
             scaledElements.append(scaledElement)
@@ -44,7 +63,8 @@ class ScaledElementProcessor {
         }
       }
       
-      callback(result.text, scaledElements)
+      callback(self.myResult, scaledElements)
+      //callback(result.text, scaledElements)
     }
   }
 

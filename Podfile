@@ -10,5 +10,6 @@ target 'Extractor' do
   pod 'Firebase/MLVision'
   pod 'Firebase/MLVisionTextModel'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Storage'
 
 end

@@ -107,14 +107,16 @@ class ViewController: UIViewController {
   private func drawFeatures(in imageView: UIImageView, completion: (() -> Void)? = nil) {
     removeFrames()
     processor.process(in: imageView) { text, elements in
-      elements.forEach() { element in
-        self.frameSublayer.addSublayer(element.shapeLayer)
+      elements.forEach() { elements in
+        self.frameSublayer.addSublayer(elements.shapeLayer)
       }
       self.scannedText = text
       completion?()
     }
   }
 }
+
+
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
   // MARK: UIImagePickerController
