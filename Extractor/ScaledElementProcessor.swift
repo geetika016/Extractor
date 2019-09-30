@@ -16,7 +16,7 @@ struct ScaledElement {
 class ScaledElementProcessor {
 	let vision = Vision.vision()
 	var textRecognizer: VisionTextRecognizer!
-  var myResult: String = " "
+  
   
 	init() {
 		textRecognizer = vision.onDeviceTextRecognizer()
@@ -25,6 +25,7 @@ class ScaledElementProcessor {
   func process(in imageView: UIImageView, callback: @escaping (_ text: String, _ scaledElements: [ScaledElement]) -> Void) {
     guard let image = imageView.image else { return }
     let visionImage = VisionImage(image: image)
+    var myResult: String = " "
     
     textRecognizer.process(visionImage) { result, error in
       guard error == nil, let result = result, !result.text.isEmpty else {
@@ -38,15 +39,15 @@ class ScaledElementProcessor {
         if(block.text.lowercased().contains("ingredient")){
           for line in block.lines{
             for element in line.elements {
-              self.myResult.append(element.text)
-              self.myResult.append(" ")
+              myResult.append(element.text)
+              myResult.append(" ")
               if(element.text.contains(":") || element.text.contains(","))
                 {
-                  self.myResult.append("\n")}
+                  myResult.append("\n")}
                 }
           }//print(block.text)
       }
-        print(self.myResult)
+        print(myResult)
       }
       
       
@@ -63,7 +64,7 @@ class ScaledElementProcessor {
         }
       }
       
-      callback(self.myResult, scaledElements)
+      callback(myResult, scaledElements)
       //callback(result.text, scaledElements)
     }
   }
