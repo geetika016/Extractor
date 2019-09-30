@@ -36,11 +36,19 @@ class ViewController: UIViewController {
   
   let processor = ScaledElementProcessor()
   var frameSublayer = CALayer()
+  var flaggedIngridientsFound: String = "Non-Compliant Ingridient(s) Found: \n "
   var scannedText: String = "Detected text can be edited here." {
     didSet {
       textView.text = scannedText
+      if(scannedText.lowercased().contains("salt"))
+      {
+        showSimpleAlert()
+        flaggedIngridientsFound.append("\n")
+        flaggedIngridientsFound.append("Salt")
+      }
     }
   }
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -141,5 +149,27 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
       drawFeatures(in: imageView)
     }
     dismiss(animated: true, completion: nil)
+  }
+  
+  
+  func showSimpleAlert() {
+    let alert = UIAlertController(title: "Warning!!", message: "Non-Compliant Ingridients Present!",         preferredStyle: UIAlertController.Style.alert)
+
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { _ in
+          //Cancel Action
+      }))
+      alert.addAction(UIAlertAction(title: "Details",
+                                    style: UIAlertAction.Style.default,
+                                    handler: self.showFlaggedIngridients
+                                      //Sign out action
+      ))
+      self.present(alert, animated: true, completion: nil)
+      print("alert called")
+  }
+  
+  func showFlaggedIngridients(alert: UIAlertAction!)
+  {
+    textView.textColor = UIColor.red
+    textView.text = flaggedIngridientsFound
   }
 }

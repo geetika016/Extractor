@@ -43,11 +43,15 @@ class ScaledElementProcessor {
               myResult.append(" ")
               if(element.text.contains(":") || element.text.contains(","))
                 {
-                  myResult.append("\n")}
+                  myResult.append("\n")
+                  
                 }
+              
+              }
           }//print(block.text)
       }
-        print(myResult)
+        //print(myResult)
+        //print(flaggedIngredients)
       }
       
       
@@ -57,15 +61,19 @@ class ScaledElementProcessor {
         for line in block.lines {
           for element in line.elements {
             let frame = self.createScaledFrame(featureFrame: element.frame, imageSize: image.size, viewFrame: imageView.frame)
-            let shapeLayer = self.createShapeLayer(frame: frame)
-            let scaledElement = ScaledElement(frame: frame, shapeLayer: shapeLayer)
-            scaledElements.append(scaledElement)
+            
+              let shapeLayer = self.createShapeLayer(frame: frame)
+            
+              let scaledElement = ScaledElement(frame: frame, shapeLayer: shapeLayer)
+            
+              scaledElements.append(scaledElement)
           }
         }
       }
       
       callback(myResult, scaledElements)
       //callback(result.text, scaledElements)
+      //return containsFlagged, flaggedIngridients as well!!
     }
   }
 
@@ -74,6 +82,16 @@ class ScaledElementProcessor {
     let shapeLayer = CAShapeLayer()
     shapeLayer.path = bpath.cgPath
     shapeLayer.strokeColor = Constants.lineColor
+    shapeLayer.fillColor = Constants.fillColor
+    shapeLayer.lineWidth = Constants.lineWidth
+    return shapeLayer
+  }
+  
+  private func createFlaggedShapeLayer(frame: CGRect) -> CAShapeLayer {
+    let bpath = UIBezierPath(rect: frame)
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.path = bpath.cgPath
+    shapeLayer.strokeColor = Constants.flaggedLineColor
     shapeLayer.fillColor = Constants.fillColor
     shapeLayer.lineWidth = Constants.lineWidth
     return shapeLayer
@@ -111,6 +129,7 @@ class ScaledElementProcessor {
   private enum Constants {
     static let lineWidth: CGFloat = 3.0
     static let lineColor = UIColor.yellow.cgColor
+    static let flaggedLineColor = UIColor.red.cgColor
     static let fillColor = UIColor.clear.cgColor
   }
 }
