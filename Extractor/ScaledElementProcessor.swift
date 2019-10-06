@@ -50,7 +50,7 @@ class ScaledElementProcessor {
               }
           }//print(block.text)
       }
-        //print(myResult)
+        print(myResult)
         //print(flaggedIngredients)
       }
       

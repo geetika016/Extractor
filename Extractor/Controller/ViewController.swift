@@ -40,12 +40,6 @@ class ViewController: UIViewController {
   var scannedText: String = "Detected text can be edited here." {
     didSet {
       textView.text = scannedText
-      if(scannedText.lowercased().contains("salt"))
-      {
-        showSimpleAlert()
-        flaggedIngridientsFound.append("\n")
-        flaggedIngridientsFound.append("Salt")
-      }
     }
   }
   
@@ -114,11 +108,26 @@ class ViewController: UIViewController {
   // 1
   private func drawFeatures(in imageView: UIImageView, completion: (() -> Void)? = nil) {
     removeFrames()
+    self.textView.textColor = UIColor.black
+    self.textView.text = "Detecting...."
+    flaggedIngridientsFound = "Non-Compliant Ingridient(s) Found: \n "
     processor.process(in: imageView) { text, elements in
       elements.forEach() { elements in
         self.frameSublayer.addSublayer(elements.shapeLayer)
       }
+      print("inside viewcontroller process function")
+      print(text)
       self.scannedText = text
+      let flagIng = ["salt", "starch", "oats"]
+      for flags in flagIng
+      {
+        if(self.scannedText.lowercased().contains(flags))
+        {
+          self.showSimpleAlert()
+          self.flaggedIngridientsFound.append("\n")
+          self.flaggedIngridientsFound.append(flags)
+        }
+      }
       completion?()
     }
   }
