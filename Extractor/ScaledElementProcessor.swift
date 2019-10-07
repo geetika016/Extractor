@@ -1,11 +1,3 @@
-//
-//  ScaledElementProcessor.swift
-//  Extractor
-//
-//  Created by Fahim Farook on 10/7/18.
-//  Copyright © 2018 David East. All rights reserved.
-//
-
 import Firebase
 
 struct ScaledElement {
@@ -39,13 +31,7 @@ class ScaledElementProcessor {
         return
       }
       print("put is complete and we received : \(String(describing: downloadMetadata))")
-    }
-
-
-
-
-
-
+    } 
     let visionImage = VisionImage(image: image)
     var myResult: String = " "
     
@@ -68,7 +54,8 @@ class ScaledElementProcessor {
               if(element.text.contains(":") || element.text.contains(","))
                 {
                   myResult.append("\n")
-                  
+                  //print("- - - - -****** Inside Line Element in Scaled Element Processor!**** - - - - -")
+                  //print(block.text)
                 }
               
               }
@@ -93,7 +80,7 @@ class ScaledElementProcessor {
           }
         }
       }
-      
+      print(result.text)
       //callback(myResult, scaledElements)
       callback(result.text, scaledElements)
       //return containsFlagged, flaggedIngridients as well!!
@@ -146,9 +133,6 @@ class ScaledElementProcessor {
     
     return CGRect(x: featurePointXScaled, y: featurePointYScaled, width: featureWidthScaled, height: featureHeightScaled)
   }
-
-  
-  // MARK: - private
   
   private enum Constants {
     static let lineWidth: CGFloat = 3.0
