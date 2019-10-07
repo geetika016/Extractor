@@ -16,7 +16,8 @@ struct ScaledElement {
 class ScaledElementProcessor {
 	let vision = Vision.vision()
 	var textRecognizer: VisionTextRecognizer!
-  
+  let storage = Storage.storage()
+ 
   
 	init() {
 		textRecognizer = vision.onDeviceTextRecognizer()
@@ -24,6 +25,27 @@ class ScaledElementProcessor {
 
   func process(in imageView: UIImageView, callback: @escaping (_ text: String, _ scaledElements: [ScaledElement]) -> Void) {
     guard let image = imageView.image else { return }
+    
+    
+    guard let imageData = imageView.image?.jpegData(compressionQuality: 0.75) else { return }
+    let randomID = UUID.init().uuidString
+    let imageUploadRef = Storage.storage().reference(withPath: "productImages/\(randomID).jpg")
+    let uploadMetadata = StorageMetadata.init()
+    uploadMetadata.contentType = "image/jpeg"
+        
+    imageUploadRef.putData(imageData, metadata: uploadMetadata){ (downloadMetadata , error) in
+      if let error = error{
+        print("Upload Error! \(error.localizedDescription)")
+        return
+      }
+      print("put is complete and we received : \(String(describing: downloadMetadata))")
+    }
+
+
+
+
+
+
     let visionImage = VisionImage(image: image)
     var myResult: String = " "
     
@@ -33,6 +55,8 @@ class ScaledElementProcessor {
         return
       }
       
+      
+
       
       
       for block in result.blocks{
@@ -50,10 +74,9 @@ class ScaledElementProcessor {
               }
           }//print(block.text)
       }
-        print(myResult)
+        //print(myResult)
         //print(flaggedIngredients)
       }
-      
       
       
       var scaledElements: [ScaledElement] = []
@@ -71,8 +94,8 @@ class ScaledElementProcessor {
         }
       }
       
-      callback(myResult, scaledElements)
-      //callback(result.text, scaledElements)
+      //callback(myResult, scaledElements)
+      callback(result.text, scaledElements)
       //return containsFlagged, flaggedIngridients as well!!
     }
   }
@@ -124,6 +147,7 @@ class ScaledElementProcessor {
     return CGRect(x: featurePointXScaled, y: featurePointYScaled, width: featureWidthScaled, height: featureHeightScaled)
   }
 
+  
   // MARK: - private
   
   private enum Constants {
