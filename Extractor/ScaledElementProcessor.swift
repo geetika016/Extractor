@@ -9,7 +9,7 @@ class ScaledElementProcessor {
 	let vision = Vision.vision()
 	var textRecognizer: VisionTextRecognizer!
   let storage = Storage.storage()
- 
+  
   
 	init() {
 		textRecognizer = vision.onDeviceTextRecognizer()
@@ -34,6 +34,8 @@ class ScaledElementProcessor {
     } 
     let visionImage = VisionImage(image: image)
     var myResult: String = " "
+    
+
     
     textRecognizer.process(visionImage) { result, error in
       guard error == nil, let result = result, !result.text.isEmpty else {
@@ -86,6 +88,10 @@ class ScaledElementProcessor {
       //return containsFlagged, flaggedIngridients as well!!
     }
   }
+  
+  func processBarcode(in imageView: UIImageView, callback: @escaping (_ text: String) -> Void) {
+  
+   }
 
   private func createShapeLayer(frame: CGRect) -> CAShapeLayer {
     let bpath = UIBezierPath(rect: frame)
